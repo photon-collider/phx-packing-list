@@ -1,0 +1,18 @@
+<.header>
+  Packing list <%= @packing_list.id %>
+  <:subtitle>This is a packing_list record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/packing_lists/#{@packing_list}/edit"}>
+      <.button>Edit packing_list</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Title"><%= @packing_list.title %></:item>
+  <:item title="Description"><%= @packing_list.description %></:item>
+  <:item title="Start date"><%= @packing_list.start_date %></:item>
+  <:item title="End date"><%= @packing_list.end_date %></:item>
+</.list>
+
+<.back navigate={~p"/packing_lists"}>Back to packing_lists</.back>

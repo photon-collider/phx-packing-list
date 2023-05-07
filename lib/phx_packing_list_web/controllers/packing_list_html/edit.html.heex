@@ -1,0 +1,8 @@
+<.header>
+  Edit Packing list <%= @packing_list.id %>
+  <:subtitle>Use this form to manage packing_list records in your database.</:subtitle>
+</.header>
+
+<.packing_list_form changeset={@changeset} action={~p"/packing_lists/#{@packing_list}"} />
+
+<.back navigate={~p"/packing_lists"}>Back to packing_lists</.back>
