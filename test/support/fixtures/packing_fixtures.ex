@@ -20,4 +20,20 @@ defmodule PhxPackingList.PackingFixtures do
 
     packing_list
   end
+
+  @doc """
+  Generate a item.
+  """
+  def item_fixture(attrs \\ %{}) do
+    {:ok, item} =
+      attrs
+      |> Enum.into(%{
+        name: "some name",
+        notes: "some notes",
+        quantity: 42
+      })
+      |> PhxPackingList.Packing.create_item()
+
+    item
+  end
 end
