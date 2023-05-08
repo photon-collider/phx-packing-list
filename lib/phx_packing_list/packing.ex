@@ -131,7 +131,13 @@ defmodule PhxPackingList.Packing do
       ** (Ecto.NoResultsError)
 
   """
-  def get_item!(id), do: Repo.get!(Item, id)
+  def get_item!(packing_list_id, id) do
+    PackingList
+    |> Repo.get!(packing_list_id)
+    |> Repo.preload(:items)
+    |> Map.get(:items)
+    |> Enum.find(&(&1.id == String.to_integer(id)))
+  end
 
   @doc """
   Creates a item.
@@ -145,8 +151,10 @@ defmodule PhxPackingList.Packing do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_item(attrs \\ %{}) do
-    %Item{}
+  def create_item(packing_list_id, attrs \\ %{}) do
+    packing_list = Repo.get!(PackingList, packing_list_id)
+
+    Ecto.build_assoc(packing_list, :items, attrs)
     |> Item.changeset(attrs)
     |> Repo.insert()
   end
@@ -196,5 +204,9 @@ defmodule PhxPackingList.Packing do
   """
   def change_item(%Item{} = item, attrs \\ %{}) do
     Item.changeset(item, attrs)
+  end
+
+  def list_items_for_packing_list(packing_list_id) do
+    Repo.all(from i in Item, where: i.packing_list_id == ^packing_list_id)
   end
 end
