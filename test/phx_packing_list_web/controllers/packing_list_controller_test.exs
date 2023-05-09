@@ -3,8 +3,18 @@ defmodule PhxPackingListWeb.PackingListControllerTest do
 
   import PhxPackingList.PackingFixtures
 
-  @create_attrs %{description: "some description", end_date: ~D[2023-05-06], start_date: ~D[2023-05-06], title: "some title"}
-  @update_attrs %{description: "some updated description", end_date: ~D[2023-05-07], start_date: ~D[2023-05-07], title: "some updated title"}
+  @create_attrs %{
+    description: "some description",
+    end_date: ~D[2023-05-06],
+    start_date: ~D[2023-05-06],
+    title: "some title"
+  }
+  @update_attrs %{
+    description: "some updated description",
+    end_date: ~D[2023-05-07],
+    start_date: ~D[2023-05-07],
+    title: "some updated title"
+  }
   @invalid_attrs %{description: nil, end_date: nil, start_date: nil, title: nil}
 
   describe "index" do

@@ -7,12 +7,18 @@
   </:actions>
 </.header>
 
-<.table id="packing_lists" rows={@packing_lists} row_click={&JS.navigate(~p"/packing_lists/#{&1}")}>
+<.table
+  id="packing_lists"
+  rows={@packing_lists}
+  row_click={&JS.navigate(~p"/packing_lists/#{&1}")}
+>
   <:col :let={packing_list} label="Title"><%= packing_list.title %></:col>
   <:col :let={packing_list} label="Description"><%= packing_list.description %></:col>
   <:col :let={packing_list} label="Start date"><%= packing_list.start_date %></:col>
   <:col :let={packing_list} label="End date"><%= packing_list.end_date %></:col>
-  <:col :let={packing_list} label="Travel Destination"><%= packing_list.travel_destination %></:col>
+  <:col :let={packing_list} label="Travel Destination">
+    <%= packing_list.travel_destination %>
+  </:col>
   <:action :let={packing_list}>
     <div class="sr-only">
       <.link navigate={~p"/packing_lists/#{packing_list}"}>Show</.link>

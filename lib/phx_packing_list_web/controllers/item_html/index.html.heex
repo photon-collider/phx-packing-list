@@ -7,7 +7,11 @@
   </:actions>
 </.header>
 
-<.table id="items" rows={@items} row_click={&JS.navigate(~p"/packing_lists/#{@packing_list_id}/items/#{&1}")}>
+<.table
+  id="items"
+  rows={@items}
+  row_click={&JS.navigate(~p"/packing_lists/#{@packing_list_id}/items/#{&1}/edit")}
+>
   <:col :let={item} label="Name"><%= item.name %></:col>
   <:col :let={item} label="Quantity"><%= item.quantity %></:col>
   <:col :let={item} label="Notes"><%= item.notes %></:col>
@@ -18,10 +22,14 @@
     <.link navigate={~p"/packing_lists/#{@packing_list_id}/items/#{item}/edit"}>Edit</.link>
   </:action>
   <:action :let={item}>
-    <.link href={~p"/packing_lists/#{@packing_list_id}/items/#{item}"} method="delete" data-confirm="Are you sure?">
+    <.link
+      href={~p"/packing_lists/#{@packing_list_id}/items/#{item}"}
+      method="delete"
+      data-confirm="Are you sure?"
+    >
       Delete
     </.link>
   </:action>
 </.table>
 
-<.back navigate={~p"/packing_lists"}>Back to packing_lists</.back>
+<.back navigate={~p"/packing_lists/#{@packing_list_id}"}>Back to packing_list</.back>

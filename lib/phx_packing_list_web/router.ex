@@ -18,6 +18,7 @@ defmodule PhxPackingListWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
     resources "/packing_lists", PackingListController do
       resources "/items", ItemController, only: [:index, :new, :create, :edit, :update, :delete]
     end
