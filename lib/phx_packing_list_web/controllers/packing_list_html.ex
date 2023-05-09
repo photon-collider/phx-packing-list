@@ -1,6 +1,8 @@
 defmodule PhxPackingListWeb.PackingListHTML do
   use PhxPackingListWeb, :html
 
+  import PhxPackingListWeb.PackingListComponents
+
   embed_templates "packing_list_html/*"
 
   @doc """

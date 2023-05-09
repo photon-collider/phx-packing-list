@@ -1,3 +1,4 @@
+<!--
 <.header>
   Packing list <%= @packing_list.id %>
   <:subtitle>This is a packing_list record from your database.</:subtitle>
@@ -20,3 +21,7 @@
 </.list>
 
 <.back navigate={~p"/packing_lists"}>Back to packing_lists</.back>
+
+-->
+
+<.packing_list packing_list={@packing_list} items={@items}/>

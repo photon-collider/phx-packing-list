@@ -28,7 +28,9 @@ defmodule PhxPackingListWeb.PackingListController do
 
   def show(conn, %{"id" => id}) do
     packing_list = Packing.get_packing_list!(id)
-    render(conn, :show, packing_list: packing_list)
+    items = Packing.list_items_for_packing_list(id)
+
+    render(conn, :show, packing_list: packing_list, items: items)
   end
 
   def edit(conn, %{"id" => id}) do
