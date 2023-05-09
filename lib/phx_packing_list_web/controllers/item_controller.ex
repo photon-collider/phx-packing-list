@@ -38,7 +38,6 @@ defmodule PhxPackingListWeb.ItemController do
   end
 
   def update(conn, %{"packing_list_id" => packing_list_id, "id" => id, "item" => item_params}) do
-
     item = Packing.get_item!(packing_list_id, id)
 
     case Packing.update_item(item, item_params) do
