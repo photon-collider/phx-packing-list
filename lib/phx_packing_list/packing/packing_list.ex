@@ -8,6 +8,8 @@ defmodule PhxPackingList.Packing.PackingList do
     field :start_date, :date
     field :end_date, :date
     field :travel_destination, :string
+    has_many :items, PhxPackingList.Packing.Item
+
     timestamps()
   end
 
