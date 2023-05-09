@@ -21,7 +21,12 @@ defmodule PhxPackingList.PackingTest do
     end
 
     test "create_packing_list/1 with valid data creates a packing_list" do
-      valid_attrs = %{description: "some description", end_date: ~D[2023-05-06], start_date: ~D[2023-05-06], title: "some title"}
+      valid_attrs = %{
+        description: "some description",
+        end_date: ~D[2023-05-06],
+        start_date: ~D[2023-05-06],
+        title: "some title"
+      }
 
       assert {:ok, %PackingList{} = packing_list} = Packing.create_packing_list(valid_attrs)
       assert packing_list.description == "some description"
@@ -36,9 +41,17 @@ defmodule PhxPackingList.PackingTest do
 
     test "update_packing_list/2 with valid data updates the packing_list" do
       packing_list = packing_list_fixture()
-      update_attrs = %{description: "some updated description", end_date: ~D[2023-05-07], start_date: ~D[2023-05-07], title: "some updated title"}
 
-      assert {:ok, %PackingList{} = packing_list} = Packing.update_packing_list(packing_list, update_attrs)
+      update_attrs = %{
+        description: "some updated description",
+        end_date: ~D[2023-05-07],
+        start_date: ~D[2023-05-07],
+        title: "some updated title"
+      }
+
+      assert {:ok, %PackingList{} = packing_list} =
+               Packing.update_packing_list(packing_list, update_attrs)
+
       assert packing_list.description == "some updated description"
       assert packing_list.end_date == ~D[2023-05-07]
       assert packing_list.start_date == ~D[2023-05-07]
@@ -47,7 +60,10 @@ defmodule PhxPackingList.PackingTest do
 
     test "update_packing_list/2 with invalid data returns error changeset" do
       packing_list = packing_list_fixture()
-      assert {:error, %Ecto.Changeset{}} = Packing.update_packing_list(packing_list, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Packing.update_packing_list(packing_list, @invalid_attrs)
+
       assert packing_list == Packing.get_packing_list!(packing_list.id)
     end
 
