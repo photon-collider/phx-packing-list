@@ -36,7 +36,7 @@ defmodule PhxPackingListWeb.PackingListComponents do
   end
 
   attr :packing_list, :map, required: true
-  # attr :items, :list, required: true
+  attr :items, :list, required: true
 
   def packing_list(assigns) do
     ~H"""
