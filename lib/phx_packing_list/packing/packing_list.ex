@@ -18,5 +18,19 @@ defmodule PhxPackingList.Packing.PackingList do
     packing_list
     |> cast(attrs, [:title, :description, :start_date, :end_date, :travel_destination])
     |> validate_required([:title, :description, :start_date, :end_date, :travel_destination])
+    |> validate_dates()
+  end
+
+  defp validate_dates(changeset) do
+
+    start_date = get_field(changeset, :start_date)
+    end_date = get_field(changeset, :end_date)
+
+    if start_date && end_date && Date.compare(start_date, end_date) == :gt do
+      add_error(changeset, :start_date, "Start date must be before end date")
+    else
+      changeset
+    end
+
   end
 end
