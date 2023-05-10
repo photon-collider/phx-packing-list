@@ -80,6 +80,8 @@ defmodule PhxPackingListWeb.PackingListComponents do
       <:col :let={item} label="Name"><%= item.name %></:col>
       <:col :let={item} label="Quantity"><%= item.quantity %></:col>
       <:col :let={item} label="Notes"><%= item.notes %></:col>
+      <:col :let={item} label="Packed"><%= item.packed %></:col>
+
       <:action :let={item}>
         <div class="sr-only">
           <.link navigate={~p"/packing_lists/#{@packing_list_id}/items/#{item}/edit"}>Edit</.link>
