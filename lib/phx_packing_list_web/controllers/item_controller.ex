@@ -19,7 +19,7 @@ defmodule PhxPackingListWeb.ItemController do
       {:ok, _item} ->
         conn
         |> put_flash(:info, "Item created successfully.")
-        |> redirect(to: ~p"/packing_lists/#{packing_list_id}/items/")
+        |> redirect(to: ~p"/packing_lists/#{packing_list_id}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :new, changeset: changeset, packing_list_id: packing_list_id)
@@ -44,7 +44,7 @@ defmodule PhxPackingListWeb.ItemController do
       {:ok, _item} ->
         conn
         |> put_flash(:info, "Item updated successfully.")
-        |> redirect(to: ~p"/packing_lists/#{packing_list_id}/items/")
+        |> redirect(to: ~p"/packing_lists/#{packing_list_id}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, :edit, item: item, changeset: changeset)
@@ -57,6 +57,6 @@ defmodule PhxPackingListWeb.ItemController do
 
     conn
     |> put_flash(:info, "Item deleted successfully.")
-    |> redirect(to: ~p"/packing_lists/#{packing_list_id}/items")
+    |> redirect(to: ~p"/packing_lists/#{packing_list_id}")
   end
 end
