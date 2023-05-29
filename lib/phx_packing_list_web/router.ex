@@ -19,9 +19,16 @@ defmodule PhxPackingListWeb.Router do
 
     get "/", PageController, :home
 
-    resources "/packing_lists", PackingListController do
-      resources "/items", ItemController, only: [:index, :new, :create, :edit, :update, :delete]
+    resources "/v1", PackingListController do
+     resources "/items", ItemController, only: [:index, :new, :create, :edit, :update, :delete]
     end
+
+    live "/packing_lists", PackingListLive.Index, :index
+    live "/packing_lists/new", PackingListLive.Index, :new
+    live "/packing_lists/:id/edit", PackingListLive.Show, :edit
+
+    live "/packing_lists/:id", PackingListLive.Show, :show
+    live "/packing_lists/:id/show/edit", PackingListLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

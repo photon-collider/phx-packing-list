@@ -36,4 +36,32 @@ defmodule PhxPackingList.PackingFixtures do
 
     item
   end
+
+  @doc """
+  Generate a packing_list.
+  """
+  def packing_list_fixture(attrs \\ %{}) do
+    {:ok, packing_list} =
+      attrs
+      |> Enum.into(%{
+
+      })
+      |> PhxPackingList.Packing.create_packing_list()
+
+    packing_list
+  end
+
+  @doc """
+  Generate a packing_list.
+  """
+  def packing_list_fixture(attrs \\ %{}) do
+    {:ok, packing_list} =
+      attrs
+      |> Enum.into(%{
+        title: "some title"
+      })
+      |> PhxPackingList.Packing.create_packing_list()
+
+    packing_list
+  end
 end

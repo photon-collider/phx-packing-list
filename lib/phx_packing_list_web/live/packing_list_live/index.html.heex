@@ -1,0 +1,68 @@
+<header class="">
+  <nav class="flex items-center justify-between px-4 py-4 bg-dark text-white sm:rounded-b-lg drop-shadow-md">
+    <span class="text-2xl font-bold">TravelPacker</span>
+    <div class="space-x-4 h-full">
+      <.link navigate={~p"/trips"}>
+        <span class="h-full"> Trips</span>
+      </.link>
+
+      <span>Inventory</span>
+      <span>Account</span>
+      <span>Logout</span>
+    </div>
+  </nav>
+</header>
+
+<div class="px-4 my-16">
+  <h1 class="text-4xl font-bold text-darkest">Trips</h1>
+
+  <%!--
+  <.table
+    id="packing_lists"
+    rows={@streams.packing_lists}
+    row_click={fn {_id, packing_list} -> JS.navigate(~p"/packing_lists/#{packing_list}") end}
+  >
+    <:col :let={{_id, packing_list}} label="Title"><%= packing_list.title %></:col>
+    <:col :let={{_id, packing_list}} label="Destination"><%= packing_list.travel_destination %></:col>
+
+
+    <:action :let={{_id, packing_list}}>
+      <div class="sr-only">
+        <.link navigate={~p"/packing_lists/#{packing_list}"}>Show</.link>
+      </div>
+      <.link patch={~p"/packing_lists/#{packing_list}/edit"}>Edit</.link>
+    </:action>
+    <:action :let={{id, packing_list}}>
+      <.link
+        phx-click={JS.push("delete", value: %{id: packing_list.id}) |> hide("##{id}")}
+        data-confirm="Are you sure?"
+      >
+        Delete
+      </.link>
+    </:action>
+  </.table>
+  --%>
+
+  <div id="trips" class="flex flex-row flex-wrap space-x-12 space-around" phx-update="stream">
+    <.trip_card :for={{id, packing_list} <- @streams.packing_lists} trip={packing_list} id={id} />
+  </div>
+
+
+    <%!--
+  <.modal
+    :if={@live_action in [:new, :edit]}
+    id="packing_list-modal"
+    show
+    on_cancel={JS.patch(~p"/packing_lists")}
+  >
+    <.live_component
+      module={PhxPackingListWeb.PackingListLive.FormComponent}
+      id={@packing_list.id || :new}
+      title={@page_title}
+      action={@live_action}
+      packing_list={@packing_list}
+      patch={~p"/packing_lists"}
+    />
+  </.modal>
+    --%>
+</div>
