@@ -40,16 +40,6 @@ defmodule PhxPackingListWeb.PackingListComponents do
 
   def packing_list(assigns) do
     ~H"""
-    <.header>
-      Packing list <%= @packing_list.id %>
-      <:subtitle>This is a packing_list record from your database.</:subtitle>
-      <:actions>
-        <.link href={~p"/packing_lists/#{@packing_list}/edit"}>
-          <.button>Edit</.button>
-        </.link>
-      </:actions>
-    </.header>
-
     <.list>
       <:item title="Title"><%= @packing_list.title %></:item>
       <:item title="Travel Destination"><%= @packing_list.travel_destination %></:item>
@@ -59,7 +49,6 @@ defmodule PhxPackingListWeb.PackingListComponents do
     </.list>
 
     <.items items={@items} packing_list_id={@packing_list.id} />
-    <.back navigate={~p"/packing_lists"}>Back to packing_lists</.back>
     """
   end
 
@@ -98,10 +87,6 @@ defmodule PhxPackingListWeb.PackingListComponents do
         </.link>
       </:action>
     </.table>
-
-    <.link href={~p"/packing_lists/#{@packing_list_id}/items/new/"}>
-          <.button>New Item</.button>
-    </.link>
     """
   end
 end
