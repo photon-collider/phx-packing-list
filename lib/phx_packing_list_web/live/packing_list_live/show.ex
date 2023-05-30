@@ -3,6 +3,8 @@ defmodule PhxPackingListWeb.PackingListLive.Show do
 
   alias PhxPackingList.Packing
 
+  import PhxPackingListWeb.PackingListComponents
+
   @impl true
   def mount(_params, _session, socket) do
     {:ok, socket}
@@ -13,7 +15,8 @@ defmodule PhxPackingListWeb.PackingListLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
-     |> assign(:packing_list, Packing.get_packing_list!(id))}
+     |> assign(:packing_list, Packing.get_packing_list!(id))
+     |> assign(:items, Packing.list_items_for_packing_list(id))}
   end
 
   defp page_title(:show), do: "Show Packing list"
