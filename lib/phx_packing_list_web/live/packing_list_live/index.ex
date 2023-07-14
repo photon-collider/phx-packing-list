@@ -1,6 +1,7 @@
 defmodule PhxPackingListWeb.PackingListLive.Index do
   use PhxPackingListWeb, :live_view
 
+  import PhxPackingListWeb.CustomComponents
   alias PhxPackingList.Packing
   alias PhxPackingList.Packing.PackingList
   alias PhxPackingListWeb.PackingListCard
@@ -13,12 +14,6 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
   @impl true
   def handle_params(params, _url, socket) do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
-  end
-
-  defp apply_action(socket, :edit, %{"id" => id}) do
-    socket
-    |> assign(:page_title, "Edit Packing list")
-    |> assign(:packing_list, Packing.get_packing_list!(id))
   end
 
   defp apply_action(socket, :new, _params) do
@@ -66,7 +61,7 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
           <p class="mt-2 text-medium"><%= @trip.description %></p>
           <div class="mt-4 space-x-2">
             <button class="text-primary text-base border border-primary rounded px-2 py-1">
-              <.link patch={~p"/packing_lists/#{@trip.id}/edit"}> Edit</.link>
+              <.link patch={~p"/packing_lists/#{@trip.id}/edit"}>Edit</.link>
             </button>
             <button class="text-primary text-base border border-primary rounded px-2 py-1">
               <.link
