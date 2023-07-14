@@ -35,3 +35,5 @@ phx_packing_list-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore DS_Store files on macOS
+**/.DS_Store
