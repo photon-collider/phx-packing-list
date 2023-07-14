@@ -1,11 +1,8 @@
 defmodule PhxPackingListWeb.ItemLive do
   use PhxPackingListWeb, :live_component
   alias PhxPackingList.Packing
-  alias PhxPackingList.Packing.Item
 
   def update(assigns, socket) do
-    IO.puts(inspect(assigns))
-
     {:ok,
      socket
      |> assign(assigns)
@@ -18,8 +15,8 @@ defmodule PhxPackingListWeb.ItemLive do
 
   def render(assigns) do
     ~H"""
-    <div class="flex flex-row bg-white py-4 px-4 text-darkest">
-      <.form :let={f} for={@changeset} phx-change="update-item" phx-target={@myself} id={@id}>
+    <div class="flex flex-row bg-white py-4 px-4 text-darkest" id={@id}>
+      <.form :let={f} for={@changeset} phx-change="update-item" phx-target={@myself}>
         <div class="flex flex-row items-center space-x-2">
           <.input type="checkbox" field={f[:packed]} />
           <.input type="text" field={f[:name]} />
@@ -41,7 +38,7 @@ defmodule PhxPackingListWeb.ItemLive do
         send(self(), {:updated_item, item})
         socket
 
-      {:error, %Ecto.Changeset{} = changeset} ->
+      {:error, %Ecto.Changeset{} = _changeset} ->
         socket |> put_flash(:info, "Error: item not updated!")
     end
   end
