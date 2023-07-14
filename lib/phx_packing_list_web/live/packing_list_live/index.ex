@@ -1,10 +1,8 @@
 defmodule PhxPackingListWeb.PackingListLive.Index do
   use PhxPackingListWeb, :live_view
 
-  import PhxPackingListWeb.CustomComponents
   alias PhxPackingList.Packing
   alias PhxPackingList.Packing.PackingList
-  alias PhxPackingListWeb.PackingListCard
 
   @impl true
   def mount(_params, _session, socket) do
