@@ -1,8 +1,8 @@
 defmodule PhxPackingListWeb.PackingListLive.Show do
   use PhxPackingListWeb, :live_view
-
   alias PhxPackingList.Packing
-
+  alias PhxPackingList.Packing.Item
+  alias PhxPackingListWeb.ItemLive
   import PhxPackingListWeb.PackingListComponents
 
   @impl true
@@ -15,8 +15,45 @@ defmodule PhxPackingListWeb.PackingListLive.Show do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
+     |> assign(:packing_list_id, id)
      |> assign(:packing_list, Packing.get_packing_list!(id))
-     |> assign(:items, Packing.list_items_for_packing_list(id))}
+     |> stream(:items, Packing.list_items_for_packing_list(id))}
+  end
+
+  def handle_event(
+        "create-item",
+        params,
+        %{assigns: %{packing_list_id: packing_list_id}} = socket
+      ) do
+    # create new item in DB
+    {:ok, item} = Packing.create_item(%{packing_list_id: packing_list_id})
+
+    # add to streams
+    {:noreply,
+     socket
+     |> stream_insert(:items, item)}
+  end
+
+  def handle_info({:updated_item, item}, socket) do
+    {:noreply, handle_updated_item(socket, item)}
+  end
+
+  defp handle_updated_item(socket, item) do
+    socket
+    |> put_flash(:info, "Item updated!")
+    |> stream_insert(:items, item)
+  end
+
+  def packing_list_header(assigns) do
+    ~H"""
+    <.list>
+      <:item title="Title"><%= @packing_list.title %></:item>
+      <:item title="Travel Destination"><%= @packing_list.travel_destination %></:item>
+      <:item title="Description"><%= @packing_list.description %></:item>
+      <:item title="Start date"><%= @packing_list.start_date %></:item>
+      <:item title="End date"><%= @packing_list.end_date %></:item>
+    </.list>
+    """
   end
 
   defp page_title(:show), do: "Show Packing list"

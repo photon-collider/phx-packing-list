@@ -1,4 +1,16 @@
+<.packing_list_header packing_list={@packing_list} />
 
-<.packing_list packing_list={@packing_list} items={@items}/>
+<button
+  class="border border-primary bg-primary text-white rounded px-2 py-2"
+  phx-click="create-item"
+>
+  <.icon name="hero-plus" /> Add Item
+</button>
+
+<h2 class="text-darkest font-bold text-xl">Items</h2>
+
+<div id="items" phx-update="stream" class="flex flex-col space-y-4">
+  <.live_component :for={{id, item} <- @streams.items} module={ItemLive} item={item} id={id} />
+</div>
 
 <.back navigate={~p"/packing_lists"}>Back to packing_lists</.back>
