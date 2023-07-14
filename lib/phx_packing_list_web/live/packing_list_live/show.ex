@@ -1,9 +1,7 @@
 defmodule PhxPackingListWeb.PackingListLive.Show do
   use PhxPackingListWeb, :live_view
   alias PhxPackingList.Packing
-  alias PhxPackingList.Packing.Item
   alias PhxPackingListWeb.ItemLive
-  import PhxPackingListWeb.PackingListComponents
 
   @impl true
   def mount(_params, _session, socket) do
@@ -20,9 +18,10 @@ defmodule PhxPackingListWeb.PackingListLive.Show do
      |> stream(:items, Packing.list_items_for_packing_list(id))}
   end
 
+  @impl true
   def handle_event(
         "create-item",
-        params,
+        _params,
         %{assigns: %{packing_list_id: packing_list_id}} = socket
       ) do
     # create new item in DB
@@ -31,9 +30,19 @@ defmodule PhxPackingListWeb.PackingListLive.Show do
     # add to streams
     {:noreply,
      socket
-     |> stream_insert(:items, item)}
+     |> put_flash(:info, "Item Created!")
+     |> stream_insert(:items, item, at: 0)}
   end
 
+  @impl true
+  def handle_event("reposition", params, socket) do
+    # Put your logic here to deal with the changes to the list order
+    # and persist the data
+    IO.inspect(params)
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_info({:updated_item, item}, socket) do
     {:noreply, handle_updated_item(socket, item)}
   end
