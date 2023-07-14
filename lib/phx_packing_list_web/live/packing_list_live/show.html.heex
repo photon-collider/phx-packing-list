@@ -9,7 +9,13 @@
 
 <h2 class="text-darkest font-bold text-xl">Items</h2>
 
-<div id="items" phx-update="stream" class="flex flex-col space-y-4">
+<div
+  id="items"
+  phx-update="stream"
+  class="flex flex-col space-y-4"
+  phx-hook="Sortable"
+  data-list_id="list"
+>
   <.live_component :for={{id, item} <- @streams.items} module={ItemLive} item={item} id={id} />
 </div>
 
