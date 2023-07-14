@@ -151,10 +151,9 @@ defmodule PhxPackingList.Packing do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_item(packing_list_id, attrs \\ %{}) do
-    packing_list = Repo.get!(PackingList, packing_list_id)
 
-    Ecto.build_assoc(packing_list, :items, attrs)
+  def create_item(attrs \\ %{}) do
+    %Item{}
     |> Item.changeset(attrs)
     |> Repo.insert()
   end
