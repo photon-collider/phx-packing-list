@@ -1,6 +1,8 @@
 defmodule PhxPackingList.Packing.PackingList do
   use Ecto.Schema
   import Ecto.Changeset
+  alias PhxPackingList.Packing
+  alias Packing.Item
 
   schema "packing_lists" do
     field :title, :string
@@ -8,7 +10,7 @@ defmodule PhxPackingList.Packing.PackingList do
     field :start_date, :date
     field :end_date, :date
     field :travel_destination, :string
-    has_many :items, PhxPackingList.Packing.Item
+    has_many :items, Item
 
     timestamps()
   end
@@ -22,7 +24,6 @@ defmodule PhxPackingList.Packing.PackingList do
   end
 
   defp validate_dates(changeset) do
-
     start_date = get_field(changeset, :start_date)
     end_date = get_field(changeset, :end_date)
 
@@ -31,6 +32,5 @@ defmodule PhxPackingList.Packing.PackingList do
     else
       changeset
     end
-
   end
 end
