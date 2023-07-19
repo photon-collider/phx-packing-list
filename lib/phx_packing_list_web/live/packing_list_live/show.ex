@@ -35,10 +35,13 @@ defmodule PhxPackingListWeb.PackingListLive.Show do
   end
 
   @impl true
-  def handle_event("reposition", params, socket) do
-    # Put your logic here to deal with the changes to the list order
-    # and persist the data
-    IO.inspect(params)
+  def handle_event("reposition", %{"listIDs" => list_ids} = _params, socket) do
+    Enum.with_index(list_ids)
+    |> Enum.each(fn {"items-" <> item_id, position} ->
+      Packing.get_item!(item_id)
+      |> Packing.update_item(%{position: position})
+    end)
+
     {:noreply, socket}
   end
 
