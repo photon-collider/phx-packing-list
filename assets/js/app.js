@@ -27,7 +27,6 @@ let Hooks = {}
 
 Hooks.Sortable = {
     mounted() {
-        console.log("mounted")
         let sorter = new Sortable(this.el, {
             animation: 150,
             delay: 100,
@@ -35,14 +34,15 @@ Hooks.Sortable = {
             ghostClass: "drag-ghost",
             forceFallback: true,
             onEnd: e => {
-                let params = { old: e.oldIndex, new: e.newIndex, ...e.item.dataset }
+                const listItems = Array.from(this.el.children)
+                const listIDs = listItems.map(listItem => listItem.id)
+                let params = { listIDs }
                 this.pushEventTo(this.el, "reposition", params)
             }
         })
     }
 }
 
-console.log("here!")
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, { hooks: Hooks, params: { _csrf_token: csrfToken } })
 
