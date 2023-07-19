@@ -8,6 +8,7 @@ defmodule PhxPackingList.Packing.Item do
     field :notes, :string
     field :quantity, :integer, default: 1
     field :packed, :boolean, default: false
+    field :position, :integer
     belongs_to :packing_list, PackingList
     timestamps()
   end
@@ -15,7 +16,7 @@ defmodule PhxPackingList.Packing.Item do
   @doc false
   def changeset(item, attrs) do
     item
-    |> cast(attrs, [:name, :notes, :packed, :packing_list_id])
-    |> validate_required([:packing_list_id])
+    |> cast(attrs, [:name, :notes, :packed, :packing_list_id, :position])
+    |> validate_required([:packing_list_id, :position])
   end
 end
