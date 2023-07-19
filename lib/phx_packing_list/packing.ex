@@ -7,6 +7,7 @@ defmodule PhxPackingList.Packing do
   alias PhxPackingList.Repo
 
   alias PhxPackingList.Packing.PackingList
+  alias PhxPackingList.Packing.Item
 
   @doc """
   Returns the list of packing_lists.
@@ -131,12 +132,8 @@ defmodule PhxPackingList.Packing do
       ** (Ecto.NoResultsError)
 
   """
-  def get_item!(packing_list_id, id) do
-    PackingList
-    |> Repo.get!(packing_list_id)
-    |> Repo.preload(:items)
-    |> Map.get(:items)
-    |> Enum.find(&(&1.id == String.to_integer(id)))
+  def get_item!(id) do
+    Repo.get!(Item, id)
   end
 
   @doc """
@@ -206,6 +203,8 @@ defmodule PhxPackingList.Packing do
   end
 
   def list_items_for_packing_list(packing_list_id) do
-    Repo.all(from i in Item, where: i.packing_list_id == ^packing_list_id)
+    Repo.all(
+      from i in Item, where: i.packing_list_id == ^packing_list_id, order_by: [asc: :position]
+    )
   end
 end
