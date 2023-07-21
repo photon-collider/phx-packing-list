@@ -50,10 +50,21 @@ defmodule PhxPackingListWeb.PackingListLive.Show do
     {:noreply, handle_updated_item(socket, item)}
   end
 
+  @impl true
+  def handle_info({:deleted_item, item}, socket) do
+    {:noreply, handle_deleted_item(socket, item)}
+  end
+
   defp handle_updated_item(socket, item) do
     socket
     |> put_flash(:info, "Item updated!")
     |> stream_insert(:items, item)
+  end
+
+  defp handle_deleted_item(socket, item) do
+    socket
+    |> put_flash(:info, "Item deleted!")
+    |> stream_delete(:items, item)
   end
 
   def packing_list_header(assigns) do

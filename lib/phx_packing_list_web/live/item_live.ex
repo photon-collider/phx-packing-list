@@ -23,6 +23,7 @@ defmodule PhxPackingListWeb.ItemLive do
           <.input type="hidden" field={f[:packing_list_id]} id={"packing-list-id-#{@id}"} />
         </div>
       </.form>
+      <button phx-click="delete-item" phx-target={@myself}>Delete</button>
     </div>
     """
   end
@@ -32,7 +33,11 @@ defmodule PhxPackingListWeb.ItemLive do
     {:noreply, save_item(socket, item_params)}
   end
 
-  defp save_item(%{assigns: %{item: item}} = socket, item_params) do
+  def handle_event("delete-item", _params, socket) do
+    {:noreply, delete_item(socket)}
+  end
+
+  defp update_item(%{assigns: %{item: item}} = socket, item_params) do
     case Packing.update_item(item, item_params) do
       {:ok, item} ->
         send(self(), {:updated_item, item})
@@ -40,6 +45,17 @@ defmodule PhxPackingListWeb.ItemLive do
 
       {:error, %Ecto.Changeset{} = _changeset} ->
         socket |> put_flash(:info, "Error: item not updated!")
+    end
+  end
+
+  defp delete_item(%{assigns: %{item: item}} = socket) do
+    case Packing.delete_item(item) do
+      {:ok, item} ->
+        send(self(), {:deleted_item, item})
+        socket
+
+      {:error, %Ecto.Changeset{} = _changeset} ->
+        socket |> put_flash(:info, "Error: item not deleted!")
     end
   end
 end
