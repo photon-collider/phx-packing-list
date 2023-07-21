@@ -33,7 +33,10 @@ defmodule PhxPackingListWeb.ItemLive do
           <.input type="hidden" field={f[:packing_list_id]} id={"packing-list-id-#{@id}"} />
         </div>
       </.form>
-      <button phx-click="delete-item" phx-target={@myself}>Delete</button>
+      </div>
+      <button phx-click="delete-item" phx-target={@myself} title="Delete">
+        <.icon name="hero-trash" />
+      </button>
     </div>
     """
   end
