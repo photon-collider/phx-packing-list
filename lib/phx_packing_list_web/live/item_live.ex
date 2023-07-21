@@ -29,7 +29,7 @@ defmodule PhxPackingListWeb.ItemLive do
       >
         <div class="flex flex-row items-center space-x-2">
           <.input type="checkbox" field={f[:packed]} id={"packed-#{@id}"} />
-          <.input type="text" field={f[:name]} id={"name-#{@id}"} />
+          <.input type="text" field={f[:name]} id={"name-#{@id}"} phx-debounce="blur" />
           <.input type="hidden" field={f[:packing_list_id]} id={"packing-list-id-#{@id}"} />
         </div>
       </.form>
