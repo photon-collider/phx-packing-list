@@ -39,8 +39,7 @@ defmodule PhxPackingListWeb.ItemLive do
   end
 
   def handle_event("update-item", %{"item" => item_params}, socket) do
-    IO.puts(inspect(item_params))
-    {:noreply, save_item(socket, item_params)}
+    {:noreply, update_item(socket, item_params)}
   end
 
   def handle_event("delete-item", _params, socket) do
