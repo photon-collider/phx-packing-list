@@ -40,6 +40,13 @@ Hooks.Sortable = {
                 this.pushEventTo(this.el, "reposition", params)
             }
         })
+    },
+
+    updated() {
+        const listItems = Array.from(this.el.children)
+        const listIDs = listItems.map(listItem => listItem.id)
+        let params = { listIDs }
+        this.pushEventTo(this.el, "reposition", params)
     }
 }
 
