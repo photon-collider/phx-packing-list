@@ -15,8 +15,18 @@ defmodule PhxPackingListWeb.ItemLive do
 
   def render(assigns) do
     ~H"""
-    <div class="flex flex-row bg-white py-4 px-4 text-darkest" id={@id} data-id={@item.id}>
-      <.form :let={f} for={@changeset} phx-change="update-item" phx-target={@myself}>
+    <div
+      class="flex flex-row bg-white py-4 px-4 text-darkest justify-between"
+      id={@id}
+      data-id={@item.id}
+    >
+      <.form
+        :let={f}
+        for={@changeset}
+        phx-submit="update-item"
+        phx-change="update-item"
+        phx-target={@myself}
+      >
         <div class="flex flex-row items-center space-x-2">
           <.input type="checkbox" field={f[:packed]} id={"packed-#{@id}"} />
           <.input type="text" field={f[:name]} id={"name-#{@id}"} />
