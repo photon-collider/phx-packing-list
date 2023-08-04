@@ -3,10 +3,20 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
 
   alias PhxPackingList.Packing
   alias PhxPackingList.Packing.PackingList
+  alias PhxPackingListWeb.PackingListLive.FormComponent
+  alias PhxPackingListWeb.PackingListLive
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :packing_lists, Packing.list_packing_lists())}
+    {:ok,
+     socket
+     |> stream(:packing_lists, Packing.list_packing_lists())
+     |> assign_modal_form_id()}
+  end
+
+  defp assign_modal_form_id(socket) do
+    socket
+    |> assign(:modal_form_id, "create-trip-modal")
   end
 
   @impl true
@@ -27,6 +37,11 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
   end
 
   @impl true
+  def handle_info({:new_packing_list, packing_list}, socket) do
+    {:noreply, stream_insert(socket, :packing_lists, packing_list)}
+  end
+
+  @impl true
   def handle_info(
         {PhxPackingListWeb.PackingListLive.FormComponent, {:saved, packing_list}},
         socket
@@ -44,7 +59,7 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
 
   def trip_card(assigns) do
     ~H"""
-    <div class="w-64 bg-white rounded-md shadow-md overflow-hidden my-4">
+    <div class="w-64 bg-white rounded-md shadow-md overflow-hidden my-4" id={"trip-#{@trip.id}"}>
       <div class="">
         <div class="p-8">
           <div class="uppercase tracking-wide text-sm text-dark font-semibold">
@@ -59,11 +74,11 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
           <p class="mt-2 text-medium"><%= @trip.description %></p>
           <div class="mt-4 space-x-2">
             <button class="text-primary text-base border border-primary rounded px-2 py-1">
-              <.link patch={~p"/packing_lists/#{@trip.id}/edit"}>Edit</.link>
+              <.link navigate={~p"/packing_lists/#{@trip.id}/edit"}>Edit</.link>
             </button>
             <button class="text-primary text-base border border-primary rounded px-2 py-1">
               <.link
-                phx-click={JS.push("delete", value: %{id: @trip.id}) |> hide("##{@trip.id}")}
+                phx-click={JS.push("delete", value: %{id: @trip.id}) |> hide("#trip-#{@trip.id}")}
                 data-confirm="Are you sure?"
               >
                 Delete

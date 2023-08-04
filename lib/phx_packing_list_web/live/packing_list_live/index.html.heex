@@ -4,4 +4,10 @@
   <div id="trips" class="flex flex-row flex-wrap space-x-12 space-around" phx-update="stream">
     <.trip_card :for={{id, packing_list} <- @streams.packing_lists} trip={packing_list} id={id} />
   </div>
+
+  <button phx-click={show_modal(@modal_form_id)}>Add Trip</button>
+
+  <.modal id={@modal_form_id}>
+    <.live_component module={PackingListLive.Form} id="live-component-form" modal_id={@modal_form_id}/>
+  </.modal>
 </div>
