@@ -6,39 +6,16 @@ defmodule PhxPackingListWeb.ItemLive do
     {:ok,
      socket
      |> assign(assigns)
-     |> assign_changeset()}
+     |> assign_changeset()
+     |> assign_display_id()}
   end
 
   defp assign_changeset(%{assigns: %{item: item}} = socket) do
     assign(socket, :changeset, Packing.change_item(item))
   end
 
-  def render(assigns) do
-    ~H"""
-    <div
-      class="flex flex-row bg-white py-4 px-4 text-darkest justify-between"
-      id={@id}
-      data-id={@item.id}
-    >
-      <.form
-        :let={f}
-        for={@changeset}
-        phx-submit="update-item"
-        phx-change="update-item"
-        phx-target={@myself}
-      >
-        <div class="flex flex-row items-center space-x-2">
-          <.input type="checkbox" field={f[:packed]} id={"packed-#{@id}"} />
-          <.input type="text" field={f[:name]} id={"name-#{@id}"} phx-debounce="blur" />
-          <.input type="hidden" field={f[:packing_list_id]} id={"packing-list-id-#{@id}"} />
-        </div>
-      </.form>
-      </div>
-      <button phx-click="delete-item" phx-target={@myself} title="Delete">
-        <.icon name="hero-trash" />
-      </button>
-    </div>
-    """
+  defp assign_display_id(%{assigns: %{item: item}} = socket) do
+    assign(socket, :display_id, "display-#{item.id}")
   end
 
   def handle_event("update-item", %{"item" => item_params}, socket) do

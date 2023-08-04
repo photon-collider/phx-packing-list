@@ -1,0 +1,33 @@
+<div
+      class="flex flex-row bg-white text-darkest justify-between shadow-sm px-4 select-none"
+      id={@id}
+      data-id={@item.id}
+
+    >
+      <div class="flex flex-row flex-grow items-center">
+        <.form :let={f} for={@changeset} phx-change="update-item" phx-target={@myself} class="cursor-pointer">
+            <.input type="checkbox" field={f[:packed]} id={"packed-#{@id}"}/>
+        </.form>
+
+        <div id={@display_id} class="py-4 flex-grow" phx-hook="PackItem">
+          <.form
+            :let={f}
+            for={@changeset}
+            phx-change="update-item"
+            phx-submit="update-item"
+            phx-target={@myself}
+            class="item-input hidden"
+          >
+              <.input type="edit-item" field={f[:name]} id={"name-#{@id}"} phx-debounce="blur"}/>
+              <.input type="hidden" field={f[:packing_list_id]} id={"packing-list-id-#{@id}"} />
+          </.form>
+          <div class="item-display w-full">
+            <%= @item.name %>
+          </div>
+        </div>
+
+      </div>
+      <button phx-click="delete-item" phx-target={@myself} title="Delete" class="mr-4 fill-primary stroke-primary text-primary">
+        <.icon name="hero-trash"/>
+      </button>
+    </div>
