@@ -33,6 +33,7 @@ Hooks.Sortable = {
             dragClass: "drag-item",
             ghostClass: "drag-ghost",
             forceFallback: true,
+            fallbackTolerance: 10,
             onEnd: e => {
                 const listItems = Array.from(this.el.children)
                 const listIDs = listItems.map(listItem => listItem.id)
@@ -48,6 +49,67 @@ Hooks.Sortable = {
         let params = { listIDs }
         this.pushEventTo(this.el, "reposition", params)
     }
+}
+
+Hooks.PackItem = {
+    mounted() {
+
+        let inputForm = this.el.querySelector('.item-input')
+        let displayElement = this.el.querySelector('.item-display')
+        let inputTextField = inputForm.querySelector('input')
+
+        let dragging = false
+
+
+        let startX, startY
+
+
+        function focusAtEnd(inputTextField) {
+            const valueLength = inputTextField.value.length
+
+            inputTextField.focus()
+            inputTextField.setSelectionRange(valueLength, valueLength)
+        }
+
+        this.el.addEventListener('mousedown', (e) => {
+            dragging = false
+
+            startX = e.clientX
+            startY = e.clientY
+        })
+
+        this.el.addEventListener('mousemove', (e) => {
+
+            let dx = startX - e.clientX
+            let dy = startY - e.clientY
+            let distance = Math.sqrt(dx * dx + dy * dy)
+
+            //console.log(distance)
+            if (distance > 9) {
+                dragging = true
+            }
+        })
+
+        this.el.addEventListener('mouseup', () => {
+            if (dragging) {
+                return
+            }
+
+
+            if (inputForm.classList.contains('hidden')) {
+                inputForm.classList.remove('hidden')
+                displayElement.classList.add('hidden')
+                focusAtEnd(inputTextField)
+            }
+        })
+
+        inputTextField.addEventListener("blur", (event) => {
+            inputForm.classList.add('hidden')
+            displayElement.textContent = inputTextField.value //optimistic update
+            displayElement.classList.remove('hidden')
+        })
+    }
+
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
