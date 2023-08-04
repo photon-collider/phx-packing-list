@@ -5,12 +5,12 @@ defmodule PhxPackingList.Packing.PackingList do
   alias Packing.Item
 
   schema "packing_lists" do
-    field :title, :string
-    field :description, :string
-    field :start_date, :date
-    field :end_date, :date
-    field :travel_destination, :string
-    has_many :items, Item
+    field(:title, :string)
+    field(:description, :string)
+    field(:start_date, :date)
+    field(:end_date, :date)
+    field(:travel_destination, :string)
+    has_many(:items, Item)
 
     timestamps()
   end
@@ -19,7 +19,7 @@ defmodule PhxPackingList.Packing.PackingList do
   def changeset(packing_list, attrs) do
     packing_list
     |> cast(attrs, [:title, :description, :start_date, :end_date, :travel_destination])
-    |> validate_required([:title, :description, :start_date, :end_date, :travel_destination])
+    |> validate_required([:title, :start_date, :end_date, :travel_destination])
     |> validate_dates()
   end
 
