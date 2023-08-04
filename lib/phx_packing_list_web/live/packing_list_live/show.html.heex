@@ -1,13 +1,28 @@
+<h1 class="text-3xl font-bold text-darkest">  <%= @packing_list.title %> </h1>
+
+
 <.packing_list_header packing_list={@packing_list} />
 
-<button
-  class="border border-primary bg-primary text-white rounded px-2 py-2"
-  phx-click="create-item"
->
-  <.icon name="hero-plus" /> Add Item
-</button>
 
-<h2 class="text-darkest font-bold text-xl">Items</h2>
+<h2 class="text-darkest font-bold text-xl my-8">Items</h2>
+
+<div class="mb-8">
+<.form :let={f} for={@changeset} phx-submit="crato" id="add-item-form" class="flex w-full">
+  <button class="border border-primary bg-primary text-white px-2 py-2 rounded-l flex flex-row items-center">
+    <.icon name="hero-plus" /> <span> Add Item </span>
+  </button>
+
+  <.input
+    type="input-todo"
+    placeholder="Enter packing list item"
+    field={f[:name]}
+    id="input-form"
+    class="w-full rounded-r border-primary focus:outline-none focus:border focus:border-primary placeholder-medium"
+  />
+  <.input type="hidden" field={f[:packing_list_id]} />
+  <.input type="hidden" field={f[:position]} />
+</.form>
+</div>
 
 <div
   id="items"
