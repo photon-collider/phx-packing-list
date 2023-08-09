@@ -2,59 +2,56 @@
   <.back navigate={~p"/packing_lists"}>View Packing Lists</.back>
 </div>
 
+<h1 class="text-3xl font-bold text-darkest mb-10"><%= @packing_list.title %></h1>
 
 <div class="mb-8">
   <div class="flex flex-row items-center mb-4 space-x-1">
-    <.icon name="hero-map"/>
-    <h2 class="text-darkest font-bold text-xl"> Destinations</h2>
+    <.icon name="hero-map" />
+    <h2 class="text-darkest font-bold text-xl">Destinations</h2>
   </div>
   <div class="flex flex-row space-x-6 text-dark mb-8">
-    <div class="flex flex-row items-center space-x-1" >
-      <.icon name="hero-map-pin"/> 
+    <div class="flex flex-row items-center space-x-1">
+      <.icon name="hero-map-pin" />
       <%= @packing_list.travel_destination %>
     </div>
-    <div class="flex flex-row items-center space-x-1"><.icon name="hero-calendar"/>  
-      <span><%= @packing_list.start_date %> </span> 
-      <.icon name="hero-arrow-right" class="h-4 w-4"/> 
-      <span><%= @packing_list.end_date %>  </span>
-    </div>    
+    <div class="flex flex-row items-center space-x-1"><.icon name="hero-calendar" />
+      <span><%= @packing_list.start_date %></span>
+      <.icon name="hero-arrow-right" class="h-4 w-4" />
+      <span><%= @packing_list.end_date %></span></div>
   </div>
 
-
-    <div :if={@packing_list.description} class="flex flex-col">
-      <div class="flex flex-row items-center mb-2 space-x-1"> 
-        <.icon name="hero-information-circle"/> 
-        <h2 class="text-darkest font-bold text-xl">Trip Details</h2>
-      </div>
-      
-
-      <%!-- <div class="flex flex-row items-center space-x-1"> <.icon name="hero-information-circle" /> <span>Details</span> </div> --%>
-      <p class="text-dark"> <%= @packing_list.description %> </p>
+  <div :if={@packing_list.description} class="flex flex-col">
+    <div class="flex flex-row items-center mb-2 space-x-1">
+      <.icon name="hero-information-circle" />
+      <h2 class="text-darkest font-bold text-xl">Trip Details</h2>
     </div>
+
+    <%!-- <div class="flex flex-row items-center space-x-1"> <.icon name="hero-information-circle" /> <span>Details</span> </div> --%>
+    <p class="text-dark"><%= @packing_list.description %></p>
+  </div>
 </div>
 
-
 <div class="flex flex-row items-center mb-4 space-x-1 text-darkest">
-       <.icon name="hero-briefcase"/> 
-<h2 class="font-bold text-xl">Items</h2>
+  <.icon name="hero-briefcase" />
+  <h2 class="font-bold text-xl">Items</h2>
 </div>
 
 <div class="mb-4">
-<.form :let={f} for={@changeset} phx-submit="crato" id="add-item-form" class="flex w-full">
-  <button class="border border-primary bg-primary text-white px-2 py-2 rounded-l flex flex-row items-center">
-    <.icon name="hero-plus" /> <span> Add Item </span>
-  </button>
+  <.form :let={f} for={@changeset} phx-submit="crato" id="add-item-form" class="flex w-full">
+    <button class="border border-primary bg-primary text-white px-2 py-2 rounded-l flex flex-row items-center">
+      <.icon name="hero-plus" /> <span> Add Item </span>
+    </button>
 
-  <.input
-    type="input-todo"
-    placeholder="Enter packing list item"
-    field={f[:name]}
-    id="input-form"
-    class="w-full rounded-r border-primary focus:outline-none focus:border focus:border-primary placeholder-medium"
-  />
-  <.input type="hidden" field={f[:packing_list_id]} />
-  <.input type="hidden" field={f[:position]} />
-</.form>
+    <.input
+      type="input-todo"
+      placeholder="Enter packing list item"
+      field={f[:name]}
+      id="input-form"
+      class="w-full rounded-r border-primary focus:outline-none focus:border focus:border-primary placeholder-medium"
+    />
+    <.input type="hidden" field={f[:packing_list_id]} />
+    <.input type="hidden" field={f[:position]} />
+  </.form>
 </div>
 
 <div
