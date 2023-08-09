@@ -3,7 +3,6 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
 
   alias PhxPackingList.Packing
   alias PhxPackingList.Packing.PackingList
-  alias PhxPackingListWeb.PackingListLive.FormComponent
   alias PhxPackingListWeb.PackingListLive
 
   @impl true
@@ -59,32 +58,57 @@ defmodule PhxPackingListWeb.PackingListLive.Index do
 
   def trip_card(assigns) do
     ~H"""
-    <div class="w-64 bg-white rounded-md shadow-md overflow-hidden my-4" id={"trip-#{@trip.id}"}>
-      <div class="">
-        <div class="p-8">
-          <div class="uppercase tracking-wide text-sm text-dark font-semibold">
-            <%= @trip.travel_destination %>
+    <div class="bg-white rounded-md shadow-sm overflow-hidden" id={"trip-#{@trip.id}"}>
+      <div class="p-6 flex flex-col justify-between">
+        <div>
+          <div>
+            <.link
+              patch={~p"/packing_lists/#{@trip.id}/edit"}
+              class="block text-lg leading-tight font-bold text-darkest hover:underline text-xl mb-4"
+            >
+              <%= @trip.title %>
+            </.link>
           </div>
-          <.link
-            patch={~p"/packing_lists/#{@trip.id}/edit"}
-            class="block mt-1 text-lg leading-tight font-medium text-darkest hover:underline"
-          >
-            <%= @trip.title %>
+          <div class="flex flex-col gap-1 text-sm">
+            <div>
+              <div>
+                <div class="flex flex-row items-center text-dark gap-1">
+                  <.icon name="hero-map-pin" />
+                  <span class="">
+                    <%= @trip.travel_destination %>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-row items-center text-dark gap-1">
+              <.icon name="hero-calendar" />
+              <span class="">
+                <%= @trip.start_date %>
+              </span>
+              <.icon name="hero-arrow-right" class="h-3 w-3" />
+              <span class="">
+                <%= @trip.end_date %>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-row justify-between mt-4">
+          <.link navigate={~p"/packing_lists/#{@trip.id}/edit"}>
+            <button class="text-primary text-base border border-primary rounded px-2 py-1 flex flex-row items-center gap-1">
+              <.icon name="hero-pencil-square" class="h-4 w-4" /> <span> Edit </span>
+            </button>
           </.link>
-          <p class="mt-2 text-medium"><%= @trip.description %></p>
-          <div class="mt-4 space-x-2">
-            <button class="text-primary text-base border border-primary rounded px-2 py-1">
-              <.link navigate={~p"/packing_lists/#{@trip.id}/edit"}>Edit</.link>
+          <.link
+            phx-click={JS.push("delete", value: %{id: @trip.id}) |> hide("#trip-#{@trip.id}")}
+            data-confirm="Are you sure?"
+          >
+            <button class="text-primary text-base border border-primary rounded px-2 py-1 flex flex-row items-center gap-1">
+              <.icon name="hero-trash" />
+              <span> Delete </span>
             </button>
-            <button class="text-primary text-base border border-primary rounded px-2 py-1">
-              <.link
-                phx-click={JS.push("delete", value: %{id: @trip.id}) |> hide("#trip-#{@trip.id}")}
-                data-confirm="Are you sure?"
-              >
-                Delete
-              </.link>
-            </button>
-          </div>
+          </.link>
         </div>
       </div>
     </div>
