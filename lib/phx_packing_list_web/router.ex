@@ -17,6 +17,7 @@ defmodule PhxPackingListWeb.Router do
   scope "/", PhxPackingListWeb do
     pipe_through :browser
 
+    live "/", PackingListLive.Index, :index
     live "/packing_lists", PackingListLive.Index, :index
     live "/packing_lists/new", PackingListLive.Index, :new
     live "/packing_lists/:id/edit", PackingListLive.Show, :edit
