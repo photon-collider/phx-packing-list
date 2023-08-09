@@ -1,4 +1,7 @@
-<h1 class="text-3xl font-bold text-darkest mb-10">  <%= @packing_list.title %> </h1>
+<div class="mb-2">
+  <.back navigate={~p"/packing_lists"}>View Packing Lists</.back>
+</div>
+
 
 <div class="mb-8">
   <div class="flex flex-row items-center mb-4 space-x-1">
@@ -63,5 +66,3 @@
 >
   <.live_component :for={{id, item} <- @streams.items} module={ItemLive} item={item} id={id} />
 </div>
-
-<.back navigate={~p"/packing_lists"}>Back to packing_lists</.back>
